@@ -1,0 +1,16 @@
+# intellj stuff
+*.iml
+*.ipr
+*.idea
+
+*.swp
+*.log
+
+# build directories
+.tmp
+
+# bower
+src/lib
+
+# npm
+node_modules
