@@ -1,0 +1,1 @@
+angular.module('rangular', ['ngRoute', 'ngSanitize', 'ngResource']);

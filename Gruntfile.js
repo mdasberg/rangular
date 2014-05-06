@@ -147,6 +147,15 @@ module.exports = function (grunt) {
     grunt.registerTask('default', function () {
         grunt.task.run([
             'clean',
+            'configureProxies',
+            'connect:runtime',
+            'watch'
+        ]);
+    });
+
+    grunt.registerTask('build', function () {
+        grunt.task.run([
+            'clean',
             'jshint',
             'karma',
             'instrument',
