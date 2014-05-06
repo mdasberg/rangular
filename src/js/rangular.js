@@ -1,1 +1,1 @@
-angular.module('rangular', ['ngRoute', 'ngSanitize', 'ngResource']);
+angular.module('rangular', ['ngRoute', 'ngSanitize', 'ngResource', 'ui.bootstrap']);

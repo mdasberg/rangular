@@ -3,6 +3,7 @@
 /*global require, module, done, process */
 var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
 var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+var path = require('path');
 
 var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
@@ -18,14 +19,6 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         config: {},
-        shell: {
-            options: {
-                stdout: true
-            },
-            protractor_install: {
-                command: 'node ./node_modules/protractor/bin/webdriver-manager update'
-            }
-        },
         watch: {
             livereload: {
                 options: {
@@ -42,19 +35,16 @@ module.exports = function (grunt) {
                 {
                     context: '/api',
                     host: 'localhost',
-                    port: 28017,
+                    port: 12000,
                     https: false,
-                    changeOrigin: true,
-                    rewrite: {
-                        '^/api/participants/': '/rangular/participants/'
-                    }
+                    changeOrigin: true
                 }
             ],
             options: {
                 port: serverPort,
                 hostname: hostname
             },
-            runtime: {
+            livereload: {
                 options: {
                     middleware: function (connect) {
                         return [
@@ -67,80 +57,23 @@ module.exports = function (grunt) {
                 }
             }
         },
+        express: {
+            options: {
+                port: 12000,
+                hostname: '*'
+            },
+            livereload: {
+                options: {
+                    server: path.resolve('./server/server'),
+                    bases: ['src']
+                }
+            }
+        },
         clean: {
             files: [
                 'results',
                 'instrumented'
             ]
-        },
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc',
-                reporter: require('jshint-junit-reporter'),
-                reporterOutput: 'results/jshint/jshint.xml'
-            }, files: {
-                src: ['src/**/*.js']
-            }
-        },
-        karma: {
-            options: {
-                singleRun: true,
-                reporters: ['progress', 'coverage', 'junit']
-            },
-            unit: {
-                configFile: 'config/karma.conf.js'
-            }
-        },
-        instrument: {
-            files: 'src/**/*.js',
-            options: {
-                lazy: true,
-                basePath: "instrumented"
-            }
-        },
-        protractor_coverage: {
-            options: {
-                keepAlive: true,
-                noColor: false,
-                coverageDir: 'results/e2e/coverage',
-                args: {
-                    baseUrl: 'http://<%= connect.options.hostname %>:' + serverPort
-                }
-            },
-            chrome: {
-                options: {
-                    configFile: 'config/protractor-chrome.conf.js'
-                }
-            },
-            phantomjs: {
-                options: {
-                    configFile: 'config/protractor-phantomjs.conf.js'
-                }
-            }
-        },
-        code_quality_report: {
-            options: {
-                dir: 'results'
-            },
-            js: {
-                results: {
-                    junit: {
-                        file: 'results/junit/junit.xml'
-                    },
-                    e2e: {
-                        files: 'results/e2e/e2e-*.xml'
-                    },
-                    coverage: 'results/coverage/*.json',
-                    jshint: 'results/jshint/jshint.xml'
-                }
-            }
-        },
-        makeReport: {
-            src: 'results/e2e/coverage/*.json',
-            options: {
-                type: 'lcov',
-                dir: 'results/coverage/e2e'
-            }
         }
     });
 
@@ -148,7 +81,8 @@ module.exports = function (grunt) {
         grunt.task.run([
             'clean',
             'configureProxies',
-            'connect:runtime',
+            'express:livereload',
+            'connect:livereload',
             'watch'
         ]);
     });

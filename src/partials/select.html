@@ -1,5 +1,24 @@
-<div ng-controller="selectCtrl">
-    <ul>
-        <li ng-repeat="participant in participants">{{participant.name}}</li>
-    </ul>
+<div class="center-block" ng-controller="selectCtrl" style=" top: 50%;
+    left: 50%;">
+    <div style="height:200px">
+        <carousel interval="interval">
+            <slide ng-repeat="slide in slides" active="slide.active">
+                <div class="jumbotron">
+                    <h1>{{slide.name}}</h1>
+                </div>
+            </slide>
+        </carousel>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-2">
+            <h1>Winners</h1>
+            <ul>
+                <li ng-repeat="winner in winners track by $index">{{winner}}</li>
+            </ul>
+        </div>
+        <div class="col-md-4 col-md-offset-2">
+            <h1>Options</h1>
+            <button type="button" class="btn btn-info" ng-click="start()">Pick a winner</button>
+        </div>
+    </div>
 </div>

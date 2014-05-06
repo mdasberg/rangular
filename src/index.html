@@ -15,14 +15,20 @@
         <script src="lib/angular-resource/angular-resource.js"></script>
         <script src="lib/angular-route/angular-route.js"></script>
         <script src="lib/angular-sanitize/angular-sanitize.js"></script>
+        <script src="lib/angular-bootstrap/ui-bootstrap.js"></script>
+        <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+        <script src="lib/underscore/underscore.js"></script>
 
         <!-- build:js js/rangular.js -->
         <script src="js/rangular.js"></script>
         <script src="js/config/routing.js"></script>
         <script src="js/controller/selectCtrl.js"></script>
-        <script src="js/service/mongoInterceptor.js"></script>
         <script src="js/service/participants.js"></script>
+        <script src="js/service/winner.js"></script>
         <!-- endbuild -->
+
+        <link rel="stylesheet" href="css/rangular.css"/>
+        <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css"/>
 
     </head>
     <body ng-app="rangular">
@@ -30,7 +36,7 @@
         <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
 
-        <div class="container-fluid" ng-cloak>
+        <div class="container" ng-cloak>
             <ng-view></ng-view>
         </div>
     </body>
