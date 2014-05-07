@@ -40,6 +40,15 @@ angular.module('rangular').
             return deferred.promise;
         }
 
+        $scope.participantField = '';
+        $scope.addParticipant = function () {
+
+            //post part-field to API
+            participants.create({name: $scope.participantField}, function (data) {
+                console.log('-TB callback : ', data);                //debug
+            });
+        };
+
         function shuffleArray(array) {
             for (var i = array.length - 1; i > 0; i--) {
                 var j = Math.floor(Math.random() * (i + 1));
