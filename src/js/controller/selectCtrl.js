@@ -1,6 +1,8 @@
 angular.module('rangular').
-    controller('selectCtrl', ['$scope', '$interval', 'participants', 'winners', '$q', '$timeout', function ($scope, $interval, participants, winners, $q, $timeout) {
+    controller('selectCtrl', ['$scope', '$interval', 'participants', 'winners', 'teams', '$q', '$timeout', function ($scope, $interval, participants, winners, teams, $q, $timeout) {
         $scope.interval = 100000;
+        $scope.participantField = '';
+        $scope.teamField = '';
 
         $q.all([
                 fetchWinners(),
@@ -40,12 +42,19 @@ angular.module('rangular').
             return deferred.promise;
         }
 
-        $scope.participantField = '';
         $scope.addParticipant = function () {
 
             //post part-field to API
             participants.create({name: $scope.participantField}, function (data) {
-                console.log('-TB callback : ', data);                //debug
+                console.log('addParticipant callback : ', data);                //debug
+            });
+        };
+
+        $scope.addTeam = function () {
+
+            //post part-field to API
+            teams.create({name: $scope.teamField}, function (data) {
+                console.log('addTeam callback : ', data);                //debug
             });
         };
 
